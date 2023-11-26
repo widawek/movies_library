@@ -1,4 +1,5 @@
 import json
+import random
 
 
 database = [
@@ -80,11 +81,21 @@ class Library:
 
     def get_series(self):
         series = [i for i in self.data if i["Type"] == 'series']
-        return sorted(series, key=lambda x: x['Title'])
+        return sorted(series, key=lambda x: (x['Title'], x['Season'],
+                                             x['Episode']))
+
+    def generate_views(self):
+        random_number = random.randint(0, len(self.data)-1)
+        self.data[random_number]["ViewCount"] = random.randint(1, 100)
 
 
 if __name__ == "__main__":
     lib = Library(database)
     print(lib.search("Gomorra: La serie"))
     lib.info("Gomorra: La serie")
-    print(lib.get_series())
+    lib.generate_views()
+    lib.generate_views()
+    lib.generate_views()
+    lib.generate_views()
+    lib.generate_views()
+    print(lib)
