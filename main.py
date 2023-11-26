@@ -74,8 +74,17 @@ class Library:
                    (self.data[i]["Episode"] == episode):
                     self.data[i]["ViewCount"] = self.data[i]["ViewCount"] + 1
 
+    def get_movies(self):
+        movies = [i for i in self.data if i["Type"] == 'movie']
+        return sorted(movies, key=lambda x: x['Title'])
+
+    def get_series(self):
+        series = [i for i in self.data if i["Type"] == 'series']
+        return sorted(series, key=lambda x: x['Title'])
+
 
 if __name__ == "__main__":
     lib = Library(database)
     print(lib.search("Gomorra: La serie"))
     lib.info("Gomorra: La serie")
+    print(lib.get_series())
