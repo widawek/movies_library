@@ -88,14 +88,22 @@ class Library:
         random_number = random.randint(0, len(self.data)-1)
         self.data[random_number]["ViewCount"] = random.randint(1, 100)
 
+    def ten_generatations(self):
+        for i in range(10):
+            self.generate_views()
+
+    def top_titles(self, content_type=None):
+        num = 3
+        if content_type in ['movie', 'series']:
+            data = [i for i in self.data if i["Type"] == content_type]
+        else:
+            data = self.data
+        return sorted(data, key=lambda x: x['ViewCount'], reverse=True)[:num]
+
 
 if __name__ == "__main__":
     lib = Library(database)
     print(lib.search("Gomorra: La serie"))
     lib.info("Gomorra: La serie")
-    lib.generate_views()
-    lib.generate_views()
-    lib.generate_views()
-    lib.generate_views()
-    lib.generate_views()
-    print(lib)
+    lib.ten_generatations()
+    print(lib.top_titles('movie'))
